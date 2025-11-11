@@ -1,11 +1,13 @@
 // import cookieParser from "cookie-parser";
+import { TransactionalEmailsApi, SendSmtpEmail } from "@getbrevo/brevo";
 import { User } from "../models/user.model.js";
 import otpStore from "../otpStore.js";
 import ApiError from "../utils/ApiError.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 // import {semnd}
-import sendCodeAndCheck from "../utils/otpCheck.js";
+// import sendCodeAndCheck from "../utils/otpCheck.js";
+import sendOtpEmail from "../utils/otpCheck.js"
 // cookieParser
 
 const checkUserEmail = asyncHandler(async (req, res) => {
@@ -346,6 +348,9 @@ const generateOtp = asyncHandler(async (req, res) => {
 
 	const email = req.body.email;
 
+	let emailAPI = new TransactionalEmailsApi();
+	emailAPI.authentications.apiKey.apiKey = "G8cJHX3LTjgZwzNO"
+
 	// console.log("This is email",email);
 	if (!email) {
 		const error = new Error("Email is required");
@@ -353,7 +358,14 @@ const generateOtp = asyncHandler(async (req, res) => {
 		throw error;
 	}
 
-	sendCodeAndCheck(email);
+	sendOtpEmail(email);
+
+	let message = new SendSmtpEmail();
+	message.subject = "First email";
+	message.textContent = "Hello world!";
+	message.sender = { name: "John Doe", email: "john.doe@example.com" };
+	message.to = [{ email: "jane.smith@example.com", name: "Jane Smith" }];
+
 
 	return res.json({
 		message: "The otp generate successfully",
