@@ -101,7 +101,7 @@ emailAPI.authentications.apiKey.apiKey = "G8cJHX3LTjgZwzNO"
 
 export const sendOtpEmail = async (email) => {
   
-  
+  console.log("successfully entered in sendotpemail this is the user",email)
   
   const otpCode = Math.floor(100000 + Math.random() * 900000).toString()
   const expires = Date.now() + 10 * 60 * 1000;
@@ -116,7 +116,8 @@ export const sendOtpEmail = async (email) => {
 
 
 
-  message.sender = { name: "X", email: process.env.EMAIL_USER };
+  message.sender = { name: "X", email: "abhi676667@gmail.com" };
+  // message.sender = { name: "X", email: process.env.EMAIL_USER };
   message.to = [{ email, name: email }];
   message.subject = `${otpCode} is your verification code`;
 
@@ -147,8 +148,11 @@ export const sendOtpEmail = async (email) => {
   try {
     const response = await emailAPI.sendTransacEmail(message);
     console.log('✅ Email sent successfully:', response);
+    return true
   } catch (error) {
+    
     console.error('❌ Failed to send email:', error);
+    return false
   }
 };
 

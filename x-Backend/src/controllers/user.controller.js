@@ -348,8 +348,8 @@ const generateOtp = asyncHandler(async (req, res) => {
 
 	const email = req.body.email;
 
-	let emailAPI = new TransactionalEmailsApi();
-	emailAPI.authentications.apiKey.apiKey = "G8cJHX3LTjgZwzNO"
+	// let emailAPI = new TransactionalEmailsApi();
+	// emailAPI.authentications.apiKey.apiKey = "G8cJHX3LTjgZwzNO"
 
 	// console.log("This is email",email);
 	if (!email) {
@@ -360,11 +360,11 @@ const generateOtp = asyncHandler(async (req, res) => {
 
 	sendOtpEmail(email);
 
-	let message = new SendSmtpEmail();
-	message.subject = "First email";
-	message.textContent = "Hello world!";
-	message.sender = { name: "John Doe", email: "john.doe@example.com" };
-	message.to = [{ email: "jane.smith@example.com", name: "Jane Smith" }];
+	// let message = new SendSmtpEmail();
+	// message.subject = "First email";
+	// message.textContent = "Hello world!";
+	// message.sender = { name: "John Doe", email: "john.doe@example.com" };
+	// message.to = [{ email: "jane.smith@example.com", name: "Jane Smith" }];
 
 
 	return res.json({
